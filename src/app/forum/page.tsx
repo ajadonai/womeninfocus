@@ -180,8 +180,8 @@ function TopicSelect({
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-lg bg-bg-card border border-border-secondary text-ink-primary font-sans cursor-pointer hover:border-wine-300 transition-colors"
-        style={{ fontSize: '0.875rem' }}
+        className="input w-full flex items-center justify-between cursor-pointer"
+        style={{ padding: '0.75rem 1rem' }}
       >
         <span className="flex items-center gap-2">
           <span
@@ -537,12 +537,12 @@ export default function ForumPage() {
                 </button>
               </div>
 
-              <div className="p-5 bg-bg-card">
+              <div className="p-6 bg-bg-card">
                 {/* Row: Name + Topic */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                   <div>
                     <label
-                      className="block font-sans text-ink-tertiary mb-1.5"
+                      className="block font-sans text-ink-tertiary mb-2"
                       style={{ fontSize: '0.75rem', fontWeight: 500 }}
                     >
                       Display name{' '}
@@ -554,13 +554,12 @@ export default function ForumPage() {
                       value={displayName}
                       onChange={(e) => setDisplayName(e.target.value)}
                       maxLength={30}
-                      className="w-full px-3.5 py-2.5 rounded-lg bg-bg-card border border-border-secondary text-ink-primary font-sans placeholder:text-ink-faint focus:outline-none focus:border-wine-400 transition-colors"
-                      style={{ fontSize: '0.875rem' }}
+                      className="input"
                     />
                   </div>
                   <div>
                     <label
-                      className="block font-sans text-ink-tertiary mb-1.5"
+                      className="block font-sans text-ink-tertiary mb-2"
                       style={{ fontSize: '0.75rem', fontWeight: 500 }}
                     >
                       Topic
@@ -570,9 +569,9 @@ export default function ForumPage() {
                 </div>
 
                 {/* Title */}
-                <div className="mb-3">
+                <div className="mb-4">
                   <label
-                    className="block font-sans text-ink-tertiary mb-1.5"
+                    className="block font-sans text-ink-tertiary mb-2"
                     style={{ fontSize: '0.75rem', fontWeight: 500 }}
                   >
                     Title
@@ -583,15 +582,14 @@ export default function ForumPage() {
                     value={storyTitle}
                     onChange={(e) => setStoryTitle(e.target.value)}
                     maxLength={100}
-                    className="w-full px-3.5 py-2.5 rounded-lg bg-bg-card border border-border-secondary text-ink-primary font-sans placeholder:text-ink-faint focus:outline-none focus:border-wine-400 transition-colors"
-                    style={{ fontSize: '0.875rem' }}
+                    className="input"
                   />
                 </div>
 
                 {/* Story body */}
-                <div className="mb-4">
+                <div className="mb-5">
                   <label
-                    className="block font-sans text-ink-tertiary mb-1.5"
+                    className="block font-sans text-ink-tertiary mb-2"
                     style={{ fontSize: '0.75rem', fontWeight: 500 }}
                   >
                     Your story{' '}
@@ -601,12 +599,12 @@ export default function ForumPage() {
                     placeholder="What happened? What did you learn? Your story can help someone else..."
                     value={storyBody}
                     onChange={(e) => setStoryBody(e.target.value)}
-                    rows={4}
+                    rows={5}
                     maxLength={2000}
-                    className="w-full px-3.5 py-2.5 rounded-lg bg-bg-card border border-border-secondary text-ink-primary font-sans placeholder:text-ink-faint focus:outline-none focus:border-wine-400 transition-colors resize-none"
-                    style={{ fontSize: '0.875rem', lineHeight: 1.6 }}
+                    className="input"
+                    style={{ resize: 'none', lineHeight: 1.65 }}
                   />
-                  <div className="flex justify-end mt-1">
+                  <div className="flex justify-end mt-1.5">
                     <span className="font-mono text-ink-ghost" style={{ fontSize: '0.6875rem' }}>
                       {storyBody.length} / 2,000
                     </span>

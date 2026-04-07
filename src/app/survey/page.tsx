@@ -158,12 +158,13 @@ export default function SurveyPage() {
       {/* ═══════════════════════════════════════════
           INFO CARDS
           ═══════════════════════════════════════════ */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-12">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-14">
         {INFO_CARDS.map(({ icon: Icon, title, desc, color, bg }) => (
           <div
             key={title}
-            className="text-center p-7"
+            className="text-center"
             style={{
+              padding: '2rem 1.5rem',
               background: 'var(--bg-card)',
               borderRadius: 'var(--radius-xl)',
               border: '1px solid var(--border-secondary)',
@@ -171,18 +172,18 @@ export default function SurveyPage() {
             }}
           >
             <div
-              className="flex items-center justify-center w-10 h-10 rounded-lg mx-auto mb-3"
-              style={{ backgroundColor: bg, color }}
+              className="flex items-center justify-center mx-auto mb-4"
+              style={{ width: 48, height: 48, borderRadius: 'var(--radius-lg)', backgroundColor: bg, color }}
             >
-              <Icon size={20} />
+              <Icon size={22} />
             </div>
             <h3
-              className="font-serif text-ink-primary mb-1.5"
-              style={{ fontSize: '1rem' }}
+              className="font-serif text-ink-primary mb-2"
+              style={{ fontSize: '1.0625rem', fontWeight: 600 }}
             >
               {title}
             </h3>
-            <p className="text-ink-tertiary" style={{ fontSize: '0.85rem', lineHeight: 1.6 }}>
+            <p className="text-ink-tertiary" style={{ fontSize: '0.875rem', lineHeight: 1.65 }}>
               {desc}
             </p>
           </div>

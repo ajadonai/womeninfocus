@@ -316,18 +316,14 @@ export default function ArticlesPage() {
       </div>
 
       {/* ── Search Bar ── */}
-      <div className="relative mt-5 mb-3 max-w-md">
-        <SearchIcon
-          size={16}
-          className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-faint pointer-events-none"
-        />
+      <div className="search-wrap mt-5 mb-3 max-w-md">
+        <SearchIcon size={16} />
         <input
           type="text"
           placeholder="Search articles..."
           value={searchQuery}
           onChange={(e) => handleSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-3 bg-bg-card border border-border-secondary text-ink-primary font-sans placeholder:text-ink-faint focus:outline-none focus:border-wine-400 transition-colors"
-          style={{ fontSize: '0.875rem', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-xs)' }}
+          className="input input-with-icon"
         />
       </div>
 

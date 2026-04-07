@@ -335,22 +335,3 @@ export function LinkIcon(props: IconProps) {
     </Svg>
   );
 }
-
-export function RssIcon(props: IconProps) {
-  return (
-    <Svg {...props}>
-      <path d="M4 11a9 9 0 0 1 9 9" />
-      <path d="M4 4a16 16 0 0 1 16 16" />
-      <circle cx="5" cy="19" r="1" />
-    </Svg>
-  );
-}
-
-export function LinkIcon(props: IconProps) {
-  return (
-    <Svg {...props}>
-      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-    </Svg>
-  );
-}

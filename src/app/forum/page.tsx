@@ -276,7 +276,10 @@ function StoryCard({
   onToggleLike: () => void;
 }) {
   return (
-    <article className="card p-6 hover:bg-bg-card-hover transition-all duration-200">
+    <article
+      className="card p-7 transition-all duration-200"
+      style={{ cursor: 'default' }}
+    >
       {/* Meta row */}
       <div className="flex items-center gap-3 mb-3">
         <Avatar displayName={story.displayName} tag={story.tag} />
@@ -434,29 +437,26 @@ export default function ForumPage() {
 
   return (
     <>
-      <div className="container-wide py-10 md:py-14">
+      <div className="container-wide py-14 md:py-20">
         {/* ═══════════════════════════════════════════
             PAGE HEADER
             ═══════════════════════════════════════════ */}
-        <div className="mb-6">
-          <p
-            className="font-mono text-ink-faint mb-3"
-            style={{ fontSize: '0.6875rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}
-          >
+        <div className="mb-8">
+          <p className="section-label mb-4">
             Community
           </p>
-          <div className="flex items-center gap-2.5 mb-2">
-            <MessageCircleIcon size={20} className="text-wine-800" />
+          <div className="flex items-center gap-2.5 mb-3">
+            <MessageCircleIcon size={22} className="text-wine-800" />
             <h1
               className="font-serif text-ink-primary"
-              style={{ fontSize: '1.75rem', letterSpacing: '-0.025em' }}
+              style={{ fontSize: '1.875rem', letterSpacing: '-0.03em', fontWeight: 700 }}
             >
               Share Your Story
             </h1>
           </div>
           <p
             className="text-ink-tertiary"
-            style={{ fontSize: '0.9375rem', maxWidth: 520, lineHeight: 1.65 }}
+            style={{ fontSize: '1rem', maxWidth: 520, lineHeight: 1.7 }}
           >
             A safe space for women to share negotiation experiences, exchange
             strategies, and lift each other up. Post anonymously or with a display

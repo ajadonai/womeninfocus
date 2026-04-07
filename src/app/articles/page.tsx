@@ -271,27 +271,24 @@ export default function ArticlesPage() {
   };
 
   return (
-    <div className="container-wide py-10 md:py-14">
+    <div className="container-wide py-14 md:py-20">
       {/* ── Page Header ── */}
-      <div className="mb-6">
-        <p
-          className="font-mono text-ink-faint mb-3"
-          style={{ fontSize: '0.6875rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}
-        >
+      <div className="mb-8">
+        <p className="section-label mb-4">
           Published work
         </p>
-        <div className="flex items-center gap-2.5 mb-2">
-          <PenIcon size={20} className="text-wine-800" />
+        <div className="flex items-center gap-2.5 mb-3">
+          <PenIcon size={22} className="text-wine-800" />
           <h1
             className="font-serif text-ink-primary"
-            style={{ fontSize: '1.75rem', letterSpacing: '-0.025em' }}
+            style={{ fontSize: '1.875rem', letterSpacing: '-0.03em', fontWeight: 700 }}
           >
             Articles
           </h1>
         </div>
         <p
           className="text-ink-tertiary"
-          style={{ fontSize: '0.9375rem', maxWidth: 500, lineHeight: 1.65 }}
+          style={{ fontSize: '1rem', maxWidth: 500, lineHeight: 1.7 }}
         >
           Research, analysis, and commentary on women&apos;s negotiation, AI equity,
           and career outcomes.
@@ -319,7 +316,7 @@ export default function ArticlesPage() {
       </div>
 
       {/* ── Search Bar ── */}
-      <div className="relative mt-4 mb-2 max-w-md">
+      <div className="relative mt-5 mb-3 max-w-md">
         <SearchIcon
           size={16}
           className="absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-faint pointer-events-none"
@@ -329,8 +326,8 @@ export default function ArticlesPage() {
           placeholder="Search articles..."
           value={searchQuery}
           onChange={(e) => handleSearch(e.target.value)}
-          className="w-full pl-10 pr-4 py-2.5 rounded-lg bg-bg-card border border-border-secondary text-ink-primary font-sans placeholder:text-ink-faint focus:outline-none focus:border-wine-400 transition-colors"
-          style={{ fontSize: '0.875rem' }}
+          className="w-full pl-10 pr-4 py-3 bg-bg-card border border-border-secondary text-ink-primary font-sans placeholder:text-ink-faint focus:outline-none focus:border-wine-400 transition-colors"
+          style={{ fontSize: '0.875rem', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-xs)' }}
         />
       </div>
 
@@ -362,10 +359,14 @@ export default function ArticlesPage() {
         {/* Featured Article */}
         {featured && (
           <div
-            className="relative overflow-hidden rounded-2xl p-7 mb-3 cursor-pointer transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
+            className="relative overflow-hidden cursor-pointer mb-4"
             style={{
               background: 'linear-gradient(135deg, var(--wine-50) 0%, var(--wine-100) 100%)',
-              border: '1px solid var(--wine-100)',
+              border: '1px solid var(--wine-200)',
+              borderRadius: 'var(--radius-xl)',
+              padding: '2rem',
+              boxShadow: 'var(--shadow-md)',
+              transition: 'box-shadow 350ms ease, transform 350ms ease',
             }}
           >
             {/* Featured badge */}
@@ -415,7 +416,7 @@ export default function ArticlesPage() {
           return (
             <div
               key={article.id}
-              className="card grid gap-4 p-6 mb-3 cursor-pointer hover:-translate-y-0.5 transition-all duration-200"
+              className="card grid gap-4 p-7 mb-4 cursor-pointer"
               style={{ gridTemplateColumns: '1fr auto' }}
             >
               <div>

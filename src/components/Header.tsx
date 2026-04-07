@@ -20,8 +20,12 @@ export function Header() {
   return (
     <>
       <header
-        className="sticky top-0 z-50 border-b border-border-secondary bg-bg-primary/85"
-        style={{ backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' }}
+        className="sticky top-0 z-50 border-b border-border-secondary"
+        style={{
+          backdropFilter: 'blur(16px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+          backgroundColor: 'color-mix(in srgb, var(--bg-primary) 85%, transparent)',
+        }}
       >
         <div className="container-wide flex items-center justify-between h-16">
           {/* ── Site Name ── */}

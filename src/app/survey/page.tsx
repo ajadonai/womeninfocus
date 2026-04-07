@@ -114,18 +114,15 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 
 export default function SurveyPage() {
   return (
-    <div className="container-narrow py-10 md:py-14">
+    <div className="container-narrow py-14 md:py-20">
       {/* ═══════════════════════════════════════════
           PAGE HEADER
           ═══════════════════════════════════════════ */}
-      <div className="mb-10 text-center">
-        <p
-          className="font-mono text-ink-faint mb-3"
-          style={{ fontSize: '0.6875rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}
-        >
+      <div className="mb-12 text-center">
+        <p className="section-label mb-4">
           Active research
         </p>
-        <div className="flex items-center justify-center gap-2.5 mb-3">
+        <div className="flex items-center justify-center gap-2.5 mb-4">
           <ClipboardCheckIcon size={22} className="text-wine-800" />
           <h1
             className="font-serif text-ink-primary"
@@ -161,9 +158,18 @@ export default function SurveyPage() {
       {/* ═══════════════════════════════════════════
           INFO CARDS
           ═══════════════════════════════════════════ */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-12">
         {INFO_CARDS.map(({ icon: Icon, title, desc, color, bg }) => (
-          <div key={title} className="card p-5 text-center">
+          <div
+            key={title}
+            className="text-center p-7"
+            style={{
+              background: 'var(--bg-card)',
+              borderRadius: 'var(--radius-xl)',
+              border: '1px solid var(--border-secondary)',
+              boxShadow: 'var(--shadow-card)',
+            }}
+          >
             <div
               className="flex items-center justify-center w-10 h-10 rounded-lg mx-auto mb-3"
               style={{ backgroundColor: bg, color }}
@@ -186,7 +192,15 @@ export default function SurveyPage() {
       {/* ═══════════════════════════════════════════
           SURVEY EMBED AREA
           ═══════════════════════════════════════════ */}
-      <div className="card overflow-hidden mb-10">
+      <div
+        className="overflow-hidden mb-12"
+        style={{
+          background: 'var(--bg-card)',
+          borderRadius: 'var(--radius-xl)',
+          border: '1px solid var(--border-secondary)',
+          boxShadow: 'var(--shadow-card)',
+        }}
+      >
         {/* Embed header bar */}
         <div
           className="flex items-center gap-2 px-5 py-3 border-b border-border-secondary"
@@ -238,12 +252,17 @@ export default function SurveyPage() {
       {/* ═══════════════════════════════════════════
           PARTICIPATION STATS
           ═══════════════════════════════════════════ */}
-      <div className="grid grid-cols-3 gap-3 mb-10">
+      <div className="grid grid-cols-3 gap-4 mb-12">
         {STATS.map(({ value, label, icon: Icon }) => (
           <div
             key={label}
-            className="rounded-xl p-4 text-center"
-            style={{ backgroundColor: 'var(--bg-secondary)' }}
+            className="text-center py-7 px-4"
+            style={{
+              borderRadius: 'var(--radius-xl)',
+              background: 'var(--bg-card)',
+              border: '1px solid var(--border-secondary)',
+              boxShadow: 'var(--shadow-card)',
+            }}
           >
             <Icon size={16} className="text-ink-faint mx-auto mb-2" />
             <p

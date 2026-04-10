@@ -5,7 +5,8 @@ import { usePathname } from 'next/navigation';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 const NAV_LINKS = [
-  { href: '/', label: 'About' },
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
   { href: '/articles', label: 'Articles' },
   { href: '/survey', label: 'Survey' },
   { href: '/forum', label: 'Discussion' },

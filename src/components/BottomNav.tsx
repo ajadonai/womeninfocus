@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
+  HomeIcon,
   UserIcon,
   PenIcon,
   ClipboardCheckIcon,
@@ -10,7 +11,8 @@ import {
 } from '@/components/icons';
 
 const NAV_ITEMS = [
-  { href: '/', label: 'About', icon: UserIcon },
+  { href: '/', label: 'Home', icon: HomeIcon },
+  { href: '/about', label: 'About', icon: UserIcon },
   { href: '/articles', label: 'Articles', icon: PenIcon },
   { href: '/survey', label: 'Survey', icon: ClipboardCheckIcon },
   { href: '/forum', label: 'Discussion', icon: MessageCircleIcon },

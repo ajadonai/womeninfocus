@@ -6,36 +6,35 @@ import {
   ClipboardCheckIcon,
   HeartIcon,
   MessageCircleIcon,
-  UserIcon,
 } from '@/components/icons';
 
 export const metadata: Metadata = {
   title: 'Women in Focus — Research & Advocacy',
   description:
-    'A research and advocacy platform focused on legal and policy analysis at the intersection of gender, public health, and governance.',
+    "Women in Focus explores women's negotiation skills, AI equity, and career outcomes through research and advocacy.",
   openGraph: {
     title: 'Women in Focus — Research & Advocacy',
-    description: 'Advancing accountability, strengthening institutions, and promoting equitable outcomes for women.',
+    description: "Advancing women through research & technology.",
   },
 };
 
 const PILLARS = [
   {
     num: '01',
-    title: 'Legal & policy analysis',
-    desc: 'Examining systemic challenges through evidence-based research and comparative legal insights to inform policy and strengthen governance.',
+    title: 'Survey research',
+    desc: 'Large-scale surveys exploring how women approach salary negotiation, promotion asks, and workplace advocacy across industries.',
     accent: 'var(--sage)',
   },
   {
     num: '02',
-    title: 'Public health & equity',
-    desc: 'Investigating maternal health, institutional accountability, and rights-based frameworks to drive meaningful change for women and vulnerable populations.',
+    title: 'AI & equity',
+    desc: 'Investigating how AI tools can either widen or close the negotiation gap\u2009—\u2009from coaching bots to biased hiring algorithms.',
     accent: 'var(--plum)',
   },
   {
     num: '03',
-    title: 'Advocacy & reform',
-    desc: 'Translating research into actionable policy recommendations, systemic reform proposals, and frameworks that promote equitable outcomes.',
+    title: 'Advocacy',
+    desc: 'Translating research into actionable frameworks, workshops, and policy recommendations that empower women at every career stage.',
     accent: 'var(--gold)',
   },
 ];
@@ -49,23 +48,23 @@ const STATS = [
 
 const FOCUS_AREAS = [
   {
-    title: 'Maternal health & governance',
-    desc: 'Analysing systemic failures in maternal healthcare and building rights-based frameworks for accountability.',
+    title: 'Women & negotiation',
+    desc: 'Why women negotiate less, what happens when they do, and how to change the default.',
     accent: 'var(--wine-800)',
   },
   {
-    title: 'Gender, negotiation & work',
-    desc: 'Research on how women navigate negotiation, career advancement, and the structural barriers they face.',
+    title: 'AI in career equity',
+    desc: 'Can AI coaching tools actually help\u2009—\u2009or do they replicate the same biases?',
     accent: 'var(--plum)',
   },
   {
-    title: 'Cross-cultural policy',
-    desc: 'Comparative analysis across Nigeria, the US, and beyond — examining how legal systems shape outcomes for women.',
+    title: 'Cross-cultural dynamics',
+    desc: 'Comparing workplace negotiation norms between Nigeria, the US, and beyond.',
     accent: 'var(--sage)',
   },
   {
-    title: 'Institutional reform',
-    desc: 'Moving from individual strategies to systemic change — strengthening institutions and promoting transparency.',
+    title: 'Policy & systemic change',
+    desc: 'Moving from individual strategies to institutional reform and pay transparency.',
     accent: 'var(--gold)',
   },
 ];
@@ -74,7 +73,7 @@ export default function AboutPage() {
   return (
     <div className="about-page">
       {/* ═══════════════════════════════════════════
-          HERO — WHO WE ARE
+          HERO
           ═══════════════════════════════════════════ */}
       <section className="hero-section">
         <div className="container-wide hero-inner">
@@ -82,20 +81,18 @@ export default function AboutPage() {
             {/* Left — Copy */}
             <div className="hero-copy">
               <p className="section-label hero-label">
-                Research&ensp;·&ensp;Policy&ensp;·&ensp;Advocacy
+                Researcher&ensp;·&ensp;Advocate&ensp;·&ensp;Writer
               </p>
 
               <h1 className="hero-heading">
                 Advancing women through{' '}
-                <em className="hero-accent">research &amp;&nbsp;policy</em>
+                <em className="hero-accent">research &amp;&nbsp;technology</em>
               </h1>
 
               <p className="hero-body">
-                We are a research and advocacy platform focused on legal and
-                policy analysis at the intersection of gender, public health,
-                and governance. Our work examines systemic challenges using
-                evidence-based research and comparative insights to inform
-                policy, strengthen systems, and drive meaningful change.
+                We study how women negotiate, how AI shapes career equity, and
+                what it takes to close the gap. Our work bridges data, lived
+                experience, and policy.
               </p>
 
               <div className="hero-actions">
@@ -116,73 +113,16 @@ export default function AboutPage() {
               <blockquote className="hero-quote">
                 <p className="hero-quote-mark">&ldquo;</p>
                 <p className="hero-quote-text">
-                  Accountability is not a luxury. It is the minimum standard
-                  we owe to every woman whose life depends on the systems
-                  we build.
+                  Negotiation isn&apos;t a soft skill&thinsp;—&thinsp;it&apos;s
+                  an economic lever. And right now, that lever is broken for half
+                  the workforce.
                 </p>
                 <footer className="hero-quote-footer">
-                  <p className="hero-quote-name">Women in Focus</p>
-                  <p className="hero-quote-role">Research &amp; Advocacy</p>
+                  <p className="hero-quote-name">Amala Okafor</p>
+                  <p className="hero-quote-role">Researcher &amp; Advocate</p>
                 </footer>
               </blockquote>
             </aside>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════
-          BEHIND THE WORK
-          ═══════════════════════════════════════════ */}
-      <section className="about-section">
-        <div className="container-wide">
-          <p className="section-label">Behind the work</p>
-          <h2 className="section-heading">Meet the founder</h2>
-
-          <div className="founder-card card card-static">
-            <div className="founder-avatar">
-              <UserIcon size={24} />
-            </div>
-            <div className="founder-info">
-              <h3 className="founder-name">Amalachukwu Shalom Okafor</h3>
-              <p className="founder-role">Legal Scholar &amp; Research Leader</p>
-              <p className="founder-bio">
-                Amalachukwu Shalom Okafor is a legal scholar and research leader
-                with experience at institutions including Harvard University and
-                the Massachusetts Institute of Technology (MIT). Her work spans
-                law, policy, and technology, with a focus on governance systems,
-                maternal health, and rights-based frameworks. She has led complex
-                research initiatives, developed policy-driven analysis, and
-                published on issues of legal accountability, systemic reform,
-                and public health.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════
-          OUR MISSION
-          ═══════════════════════════════════════════ */}
-      <section className="about-section">
-        <div className="container-wide">
-          <div className="cta-banner wine-gradient">
-            <div className="cta-content">
-              <div className="cta-copy">
-                <div className="cta-eyebrow">
-                  <HeartIcon size={14} />
-                  <span>Our mission</span>
-                </div>
-                <h3 className="cta-heading">
-                  Rigorous research. Clear&nbsp;analysis. Equitable&nbsp;outcomes.
-                </h3>
-                <p className="cta-body">
-                  Our mission is to produce rigorous research and clear policy
-                  analysis that advances accountability, strengthens institutions,
-                  and promotes equitable outcomes&thinsp;&mdash;&thinsp;particularly
-                  for women and vulnerable populations.
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -232,7 +172,7 @@ export default function AboutPage() {
       </section>
 
       {/* ═══════════════════════════════════════════
-          OUR WORKSTREAMS
+          WHAT I WRITE ABOUT
           ═══════════════════════════════════════════ */}
       <section className="about-section">
         <div className="container-wide">

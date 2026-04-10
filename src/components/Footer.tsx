@@ -3,7 +3,8 @@ import { MailIcon, LinkedInIcon, TwitterIcon, ScholarIcon } from '@/components/i
 import type { SiteSettings } from '@/sanity/lib/fetch';
 
 const FOOTER_NAV = [
-  { href: '/', label: 'About' },
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
   { href: '/articles', label: 'Articles' },
   { href: '/survey', label: 'Survey' },
   { href: '/forum', label: 'Discussion' },

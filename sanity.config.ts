@@ -11,6 +11,10 @@ const structure = (S: StructureBuilder) =>
         .title('Articles')
         .schemaType('article')
         .child(S.documentTypeList('article').title('Articles')),
+      S.listItem()
+        .title('Forum Posts')
+        .schemaType('forumPost')
+        .child(S.documentTypeList('forumPost').title('Forum Posts')),
       S.divider(),
       S.listItem()
         .title('Site Settings')

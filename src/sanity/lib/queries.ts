@@ -51,3 +51,25 @@ export const siteSettingsQuery = groq`
     "resumeUrl": resumeFile.asset->url
   }
 `;
+
+// ── Forum Posts ──
+
+export const allForumPostsQuery = groq`
+  *[_type == "forumPost"] | order(publishedAt desc) {
+    _id,
+    title,
+    body,
+    displayName,
+    tag,
+    hearts,
+    publishedAt
+  }
+`;
+
+export const forumPostCountQuery = groq`
+  count(*[_type == "forumPost"])
+`;
+
+export const forumHeartsQuery = groq`
+  math::sum(*[_type == "forumPost"].hearts)
+`;

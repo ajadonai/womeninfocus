@@ -4,6 +4,9 @@ import {
   articleBySlugQuery,
   articleSlugsQuery,
   siteSettingsQuery,
+  allForumPostsQuery,
+  forumPostCountQuery,
+  forumHeartsQuery,
 } from './queries';
 
 /* ═══════════════════════════════════════════════════
@@ -28,6 +31,21 @@ export interface SiteSettings {
   twitterUrl: string | null;
   scholarUrl: string | null;
   resumeUrl: string | null;
+}
+
+export interface SanityForumPost {
+  _id: string;
+  title: string;
+  body: string;
+  displayName: string | null;
+  tag: string;
+  hearts: number;
+  publishedAt: string;
+}
+
+export interface ForumStats {
+  postCount: number;
+  totalHearts: number;
 }
 
 /* ═══════════════════════════════════════════════════
@@ -87,5 +105,32 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
   } catch (error) {
     console.warn('Sanity settings fetch failed:', error);
     return null;
+  }
+}
+
+export async function getAllForumPosts(): Promise<SanityForumPost[]> {
+  if (!isSanityConfigured()) return [];
+
+  try {
+    const posts = await getClient().fetch<SanityForumPost[]>(allForumPostsQuery);
+    return posts || [];
+  } catch (error) {
+    console.warn('Sanity forum fetch failed:', error);
+    return [];
+  }
+}
+
+export async function getForumStats(): Promise<ForumStats> {
+  if (!isSanityConfigured()) return { postCount: 0, totalHearts: 0 };
+
+  try {
+    const [postCount, totalHearts] = await Promise.all([
+      getClient().fetch<number>(forumPostCountQuery),
+      getClient().fetch<number>(forumHeartsQuery),
+    ]);
+    return { postCount: postCount || 0, totalHearts: totalHearts || 0 };
+  } catch (error) {
+    console.warn('Sanity forum stats fetch failed:', error);
+    return { postCount: 0, totalHearts: 0 };
   }
 }

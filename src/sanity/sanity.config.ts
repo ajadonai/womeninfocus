@@ -6,7 +6,6 @@ import { schemaTypes } from './schemas';
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
 
-// Custom structure: Articles list + Site Settings singleton
 const structure = (S: StructureBuilder) =>
   S.list()
     .title('Content')
@@ -15,6 +14,10 @@ const structure = (S: StructureBuilder) =>
         .title('Articles')
         .schemaType('article')
         .child(S.documentTypeList('article').title('Articles')),
+      S.listItem()
+        .title('Forum Posts')
+        .schemaType('forumPost')
+        .child(S.documentTypeList('forumPost').title('Forum Posts')),
       S.divider(),
       S.listItem()
         .title('Site Settings')

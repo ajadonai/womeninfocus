@@ -3674,3 +3674,69 @@ html { scroll-behavior: smooth; }
   gap: 0.75rem;
   align-items: center;
 }
+
+/* ─── Founder card ─── */
+.founder-card {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  padding: 2rem;
+}
+
+.founder-avatar {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--wine-50);
+  color: var(--wine-700);
+  border: 2px solid var(--wine-200);
+}
+[data-theme="dark"] .founder-avatar {
+  background: var(--wine-950);
+  color: var(--wine-400);
+  border-color: var(--wine-800);
+}
+
+.founder-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.founder-name {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ink-primary);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.25rem;
+}
+
+.founder-role {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--wine-700);
+  margin-bottom: 1rem;
+}
+[data-theme="dark"] .founder-role { color: var(--wine-400); }
+
+.founder-bio {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--ink-secondary);
+}
+
+@media (max-width: 640px) {
+  .founder-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem;
+  }
+}

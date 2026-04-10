@@ -3645,3 +3645,15 @@ html { scroll-behavior: smooth; }
   .article-excerpt { font-size: 1rem; }
   .article-body { font-size: 1rem; }
 }
+
+/* ─── Survey iframe (live embed) ─── */
+.surv-embed-live {
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  overflow: hidden;
+  background: var(--bg-card);
+}
+.surv-iframe {
+  display: block;
+  border: none;
+  min-height: 600px;
+}

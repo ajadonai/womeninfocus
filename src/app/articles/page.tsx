@@ -1,6 +1,9 @@
 import { getAllArticles } from '@/sanity/lib/fetch';
 import { ArticlesFeed, type ArticleItem } from '@/components/ArticlesFeed';
 
+// Revalidate every 60 seconds so new Sanity content appears without redeploying
+export const revalidate = 60;
+
 /* ═══════════════════════════════════════════════════
    TAG → COLOR MAP
    ═══════════════════════════════════════════════════ */

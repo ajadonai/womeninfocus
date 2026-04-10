@@ -6,7 +6,11 @@ import { BottomNav } from '@/components/BottomNav';
 import { ScrollToTop } from '@/components/ScrollToTop';
 import { PageTransition } from '@/components/PageTransition';
 import { SkipToContent } from '@/components/SkipToContent';
+import { getSiteSettings } from '@/sanity/lib/fetch';
 import './globals.css';
+
+// Revalidate site settings every 60 seconds
+export const revalidate = 60;
 
 /* ═══════════════════════════════════════════════════
    SEO — Global metadata
@@ -77,11 +81,13 @@ export const viewport: Viewport = {
    ROOT LAYOUT
    ═══════════════════════════════════════════════════ */
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const settings = await getSiteSettings();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -109,7 +115,7 @@ export default function RootLayout({
               {children}
             </PageTransition>
           </main>
-          <Footer />
+          <Footer settings={settings} />
           <BottomNav />
           <ScrollToTop />
         </ThemeProvider>

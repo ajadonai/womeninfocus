@@ -1,12 +1,6 @@
 import Link from 'next/link';
 import { MailIcon, LinkedInIcon, TwitterIcon, ScholarIcon } from '@/components/icons';
-
-const SOCIAL_LINKS = [
-  { href: 'mailto:amalaokafor01@gmail.com', icon: MailIcon, label: 'Email' },
-  { href: '#', icon: LinkedInIcon, label: 'LinkedIn' },
-  { href: '#', icon: TwitterIcon, label: 'X / Twitter' },
-  { href: '#', icon: ScholarIcon, label: 'Google Scholar' },
-];
+import type { SiteSettings } from '@/sanity/lib/fetch';
 
 const FOOTER_NAV = [
   { href: '/', label: 'About' },
@@ -15,7 +9,14 @@ const FOOTER_NAV = [
   { href: '/forum', label: 'Discussion' },
 ];
 
-export function Footer() {
+export function Footer({ settings }: { settings?: SiteSettings | null }) {
+  const socialLinks = [
+    { href: 'mailto:amalaokafor01@gmail.com', icon: MailIcon, label: 'Email' },
+    { href: settings?.linkedinUrl || '#', icon: LinkedInIcon, label: 'LinkedIn' },
+    { href: settings?.twitterUrl || '#', icon: TwitterIcon, label: 'X / Twitter' },
+    { href: settings?.scholarUrl || '#', icon: ScholarIcon, label: 'Google Scholar' },
+  ];
+
   return (
     <footer className="site-footer">
       <div className="container-wide">
@@ -40,8 +41,14 @@ export function Footer() {
           </nav>
 
           <div className="footer-socials">
-            {SOCIAL_LINKS.map(({ href, icon: Icon, label }) => (
-              <a key={label} href={href} aria-label={label} className="footer-social-link">
+            {socialLinks.map(({ href, icon: Icon, label }) => (
+              <a
+                key={label}
+                href={href}
+                aria-label={label}
+                className="footer-social-link"
+                {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              >
                 <Icon size={16} />
               </a>
             ))}

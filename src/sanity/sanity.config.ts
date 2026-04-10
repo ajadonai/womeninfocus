@@ -1,9 +1,30 @@
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
+import type { StructureBuilder } from 'sanity/structure';
 import { schemaTypes } from './schemas';
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
+
+// Custom structure: Articles list + Site Settings singleton
+const structure = (S: StructureBuilder) =>
+  S.list()
+    .title('Content')
+    .items([
+      S.listItem()
+        .title('Articles')
+        .schemaType('article')
+        .child(S.documentTypeList('article').title('Articles')),
+      S.divider(),
+      S.listItem()
+        .title('Site Settings')
+        .child(
+          S.document()
+            .schemaType('siteSettings')
+            .documentId('siteSettings')
+            .title('Site Settings')
+        ),
+    ]);
 
 export default defineConfig({
   name: 'wif-studio',
@@ -12,7 +33,11 @@ export default defineConfig({
   projectId,
   dataset,
 
-  plugins: [structureTool()],
+  basePath: '/studio',
+
+  plugins: [
+    structureTool({ structure }),
+  ],
 
   schema: {
     types: schemaTypes,

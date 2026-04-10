@@ -1,14 +1,5 @@
-import Link from 'next/link';
 import { MailIcon, LinkedInIcon, TwitterIcon, ScholarIcon } from '@/components/icons';
 import type { SiteSettings } from '@/sanity/lib/fetch';
-
-const FOOTER_NAV = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/articles', label: 'Articles' },
-  { href: '/survey', label: 'Survey' },
-  { href: '/forum', label: 'Discussion' },
-];
 
 export function Footer({ settings }: { settings?: SiteSettings | null }) {
   const socialLinks = [
@@ -21,7 +12,7 @@ export function Footer({ settings }: { settings?: SiteSettings | null }) {
   return (
     <footer className="site-footer">
       <div className="container-wide">
-        {/* Top row — branding + nav + socials */}
+        {/* Top row — branding + socials */}
         <div className="footer-top">
           <div className="footer-brand">
             <p className="footer-name">
@@ -32,14 +23,6 @@ export function Footer({ settings }: { settings?: SiteSettings | null }) {
               Advancing women through research&nbsp;&amp;&nbsp;technology.
             </p>
           </div>
-
-          <nav className="footer-nav" aria-label="Footer navigation">
-            {FOOTER_NAV.map(({ href, label }) => (
-              <Link key={href} href={href} className="footer-nav-link">
-                {label}
-              </Link>
-            ))}
-          </nav>
 
           <div className="footer-socials">
             {socialLinks.map(({ href, icon: Icon, label }) => (

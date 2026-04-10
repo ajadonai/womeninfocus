@@ -33,7 +33,7 @@ export function BottomNav() {
               className={`bottom-nav-link ${isActive ? 'bottom-nav-link--active' : ''}`}
               aria-current={isActive ? 'page' : undefined}
             >
-              <Icon size={20} strokeWidth={isActive ? 2.2 : 1.8} />
+              <Icon size={18} strokeWidth={isActive ? 2.2 : 1.8} />
               <span className="bottom-nav-label">{label}</span>
             </Link>
           );

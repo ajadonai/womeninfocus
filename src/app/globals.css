@@ -248,7 +248,8 @@ code, pre { font-family: var(--font-mono); }
   display: flex;
   align-items: center;
   justify-content: space-around;
-  height: 58px;
+  height: 56px;
+  padding: 0 0.25rem;
 }
 
 .bottom-nav-link {
@@ -256,8 +257,9 @@ code, pre { font-family: var(--font-mono); }
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.25rem;
-  width: 100%;
+  gap: 0.125rem;
+  flex: 1;
+  min-width: 0;
   height: 100%;
   color: var(--ink-faint);
   text-decoration: none;
@@ -268,9 +270,13 @@ code, pre { font-family: var(--font-mono); }
 
 .bottom-nav-label {
   font-family: var(--font-sans);
-  font-size: 0.625rem;
+  font-size: 0.5625rem;
   font-weight: 500;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 .bottom-nav-link--active .bottom-nav-label { font-weight: 600; }
 
@@ -760,6 +766,7 @@ html { scroll-behavior: smooth; }
 
 /* ─── Generic section rhythm ─── */
 .about-section {
+  padding-top: 3rem;
   padding-bottom: 4rem;
 }
 .about-section--last {
@@ -3320,7 +3327,8 @@ html { scroll-behavior: smooth; }
 .footer-top {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  align-items: center;
+  gap: 1.25rem;
   padding: 2.5rem 0 0;
 }
 
@@ -3331,6 +3339,7 @@ html { scroll-behavior: smooth; }
 .footer-name {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0;
   font-family: var(--font-serif);
   font-size: 1rem;
@@ -3345,29 +3354,6 @@ html { scroll-behavior: smooth; }
   font-size: 0.8125rem;
   color: var(--ink-tertiary);
   line-height: 1.5;
-}
-
-.footer-nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.25rem;
-  flex-wrap: wrap;
-}
-
-.footer-nav-link {
-  padding: 0.375rem 0.75rem;
-  border-radius: var(--radius-sm);
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: var(--ink-tertiary);
-  text-decoration: none;
-  transition: color var(--transition-fast), background var(--transition-fast);
-}
-.footer-nav-link:hover {
-  color: var(--ink-primary);
-  background: var(--bg-secondary);
 }
 
 .footer-socials {
@@ -3440,8 +3426,8 @@ html { scroll-behavior: smooth; }
     text-align: left;
   }
 
-  .footer-nav {
-    gap: 0.125rem;
+  .footer-name {
+    justify-content: flex-start;
   }
 
   .footer-bottom {
@@ -3464,10 +3450,6 @@ html { scroll-behavior: smooth; }
 
   .footer-name {
     font-size: 1.0625rem;
-  }
-
-  .footer-nav-link {
-    font-size: 0.8125rem;
   }
 
   .footer-bottom {

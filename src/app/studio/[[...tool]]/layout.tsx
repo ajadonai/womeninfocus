@@ -1,5 +1,8 @@
+import { metadata as studioMetadata } from 'next-sanity/studio';
+
 export const metadata = {
-  title: 'Women in Focus — CMS Studio',
+  ...studioMetadata,
+  title: 'Women in Focus — CMS',
   description: 'Content management for womeninfocus.ng',
 };
 

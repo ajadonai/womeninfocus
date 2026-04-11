@@ -102,3 +102,14 @@ export const allForumTagsQuery = groq`
     color
   }
 `;
+
+// ── Top Forum Posts (for homepage quotes) ──
+
+export const topForumPostsQuery = groq`
+  *[_type == "forumPost"] | order(hearts desc) [0...3] {
+    _id,
+    body,
+    displayName,
+    tag
+  }
+`;

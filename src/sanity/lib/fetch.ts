@@ -10,6 +10,7 @@ import {
   forumHeartsQuery,
   commentsByPostQuery,
   allForumTagsQuery,
+  topForumPostsQuery,
 } from './queries';
 
 /* ═══════════════════════════════════════════════════
@@ -198,5 +199,24 @@ export async function getForumTags(): Promise<ForumTag[]> {
   } catch (error) {
     console.warn('Sanity forum tags fetch failed:', error);
     return DEFAULT_TAGS;
+  }
+}
+
+export interface TopForumPost {
+  _id: string;
+  body: string;
+  displayName: string | null;
+  tag: string;
+}
+
+export async function getTopForumPosts(): Promise<TopForumPost[]> {
+  if (!isSanityConfigured()) return [];
+
+  try {
+    const posts = await getFreshClient().fetch<TopForumPost[]>(topForumPostsQuery);
+    return posts || [];
+  } catch (error) {
+    console.warn('Sanity top posts fetch failed:', error);
+    return [];
   }
 }

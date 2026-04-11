@@ -7,7 +7,7 @@ import {
   HeartIcon,
   MessageCircleIcon,
 } from '@/components/icons';
-import { getSiteSettings, getForumStats, getArticleCount } from '@/sanity/lib/fetch';
+import { getSiteSettings, getForumStats, getArticleCount, getTopForumPosts } from '@/sanity/lib/fetch';
 import { STATIC_ARTICLES } from '@/data/articles';
 
 export const metadata: Metadata = {
@@ -67,10 +67,11 @@ const FOCUS_AREAS = [
 ];
 
 export default async function HomePage() {
-  const [settings, forumStats, cmsArticleCount] = await Promise.all([
+  const [settings, forumStats, cmsArticleCount, topPosts] = await Promise.all([
     getSiteSettings(),
     getForumStats(),
     getArticleCount(),
+    getTopForumPosts(),
   ]);
 
   // Dynamic stats
@@ -252,19 +253,32 @@ export default async function HomePage() {
           <h2 className="section-heading">From the discussion</h2>
 
           <div className="community-preview">
-            {[
-              { quote: 'I finally asked for a raise after three years. The key was having market data ready.', author: 'Anonymous', tag: 'Salary' },
-              { quote: 'In Lagos, relationships carry more weight. In New York, it\u2019s about leverage. Both require confidence.', author: 'Anonymous', tag: 'Global' },
-              { quote: 'I positioned it as a mutual win. Changed everything about how my manager responded.', author: 'S.M.', tag: 'Strategy' },
-            ].map((item) => (
-              <div key={item.quote} className="community-card card card-static">
-                <p className="community-quote">&ldquo;{item.quote}&rdquo;</p>
-                <p className="community-author">
-                  {item.author}
-                  <span className="community-tag">&ensp;&middot;&ensp;{item.tag}</span>
-                </p>
-              </div>
-            ))}
+            {(() => {
+              const FALLBACK_QUOTES = [
+                { quote: 'I finally asked for a raise after three years. The key was having market data ready.', author: 'Anonymous', tag: 'Salary' },
+                { quote: 'In Lagos, relationships carry more weight. In New York, it\u2019s about leverage. Both require confidence.', author: 'Anonymous', tag: 'Global' },
+                { quote: 'I positioned it as a mutual win. Changed everything about how my manager responded.', author: 'S.M.', tag: 'Strategy' },
+              ];
+
+              // Use CMS posts if we have at least 3, otherwise fall back
+              const quotes = topPosts.length >= 3
+                ? topPosts.map(p => ({
+                    quote: p.body.length > 140 ? p.body.slice(0, 137) + '...' : p.body,
+                    author: p.displayName || 'Anonymous',
+                    tag: p.tag,
+                  }))
+                : FALLBACK_QUOTES;
+
+              return quotes.map((item) => (
+                <div key={item.quote} className="community-card card card-static">
+                  <p className="community-quote">&ldquo;{item.quote}&rdquo;</p>
+                  <p className="community-author">
+                    {item.author}
+                    <span className="community-tag">&ensp;&middot;&ensp;{item.tag}</span>
+                  </p>
+                </div>
+              ));
+            })()}
           </div>
 
           <div className="community-footer">

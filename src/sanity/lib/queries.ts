@@ -69,7 +69,8 @@ export const allForumPostsQuery = groq`
     displayName,
     tag,
     hearts,
-    publishedAt
+    publishedAt,
+    "commentCount": count(*[_type == "forumComment" && references(^._id)])
   }
 `;
 
@@ -79,4 +80,15 @@ export const forumPostCountQuery = groq`
 
 export const forumHeartsQuery = groq`
   math::sum(*[_type == "forumPost"].hearts)
+`;
+
+// ── Forum Comments ──
+
+export const commentsByPostQuery = groq`
+  *[_type == "forumComment" && post._ref == $postId] | order(createdAt asc) {
+    _id,
+    displayName,
+    body,
+    createdAt
+  }
 `;

@@ -26,6 +26,13 @@ export interface ForumStory {
   replies: number;
 }
 
+interface Comment {
+  _id: string;
+  displayName: string | null;
+  body: string;
+  createdAt: string;
+}
+
 const TAG_COLORS: Record<string, string> = {
   Salary: 'var(--wine-800)',
   'AI Tools': 'var(--plum)',
@@ -37,6 +44,24 @@ const TAG_COLORS: Record<string, string> = {
 
 const TOPIC_FILTERS = ['All', 'Salary', 'AI Tools', 'Strategy', 'Global', 'Support', 'Research'];
 const STORIES_PER_PAGE = 4;
+
+/* ═══════════════════════════════════════════════════
+   HELPERS
+   ═══════════════════════════════════════════════════ */
+
+function commentTimeAgo(dateStr: string): string {
+  const now = Date.now();
+  const then = new Date(dateStr).getTime();
+  const diffMs = now - then;
+  const diffMin = Math.floor(diffMs / 60000);
+  const diffHr = Math.floor(diffMin / 60);
+  const diffDay = Math.floor(diffHr / 24);
+
+  if (diffDay >= 1) return `${diffDay}d ago`;
+  if (diffHr >= 1) return `${diffHr}h ago`;
+  if (diffMin >= 1) return `${diffMin}m ago`;
+  return 'just now';
+}
 
 /* ═══════════════════════════════════════════════════
    SMALL COMPONENTS
@@ -57,6 +82,15 @@ function Avatar({ displayName, tag }: { displayName: string; tag: string }) {
   const color = TAG_COLORS[tag] || 'var(--wine-800)';
   return (
     <div className="forum-avatar" style={{ backgroundColor: color }}>
+      {isAnon ? '?' : displayName[0].toUpperCase()}
+    </div>
+  );
+}
+
+function MiniAvatar({ displayName }: { displayName: string }) {
+  const isAnon = displayName === 'Anonymous';
+  return (
+    <div className="forum-mini-avatar">
       {isAnon ? '?' : displayName[0].toUpperCase()}
     </div>
   );
@@ -134,7 +168,158 @@ function SuccessToast({ show, onClose }: { show: boolean; onClose: () => void })
   );
 }
 
-function StoryCard({ story, isLiked, onToggleLike }: { story: ForumStory; isLiked: boolean; onToggleLike: () => void }) {
+/* ═══════════════════════════════════════════════════
+   COMMENT SECTION
+   ═══════════════════════════════════════════════════ */
+
+function CommentSection({ postId, commentCount }: { postId: string; commentCount: number }) {
+  const [open, setOpen] = useState(false);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [commentBody, setCommentBody] = useState('');
+  const [commentName, setCommentName] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [localCount, setLocalCount] = useState(commentCount);
+
+  const fetchComments = useCallback(async () => {
+    if (loaded) return;
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/forum/comments?postId=${postId}`);
+      if (res.ok) {
+        const data = await res.json();
+        setComments(data.comments || []);
+        setLocalCount(data.comments?.length || 0);
+      }
+    } catch { /* ignore */ }
+    setLoading(false);
+    setLoaded(true);
+  }, [postId, loaded]);
+
+  const handleToggle = () => {
+    const next = !open;
+    setOpen(next);
+    if (next && !loaded) fetchComments();
+  };
+
+  const handleSubmit = async () => {
+    if (!commentBody.trim() || commentBody.trim().length < 2) return;
+    setSubmitting(true);
+    try {
+      const res = await fetch('/api/forum/comments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          postId,
+          body: commentBody.trim(),
+          displayName: commentName.trim() || 'Anonymous',
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setComments(prev => [...prev, data.comment]);
+        setLocalCount(prev => prev + 1);
+        setCommentBody('');
+      }
+    } catch { /* ignore */ }
+    setSubmitting(false);
+  };
+
+  return (
+    <div className="forum-comments-section">
+      <button
+        type="button"
+        onClick={handleToggle}
+        className={`forum-story-replies ${open ? 'forum-story-replies--active' : ''}`}
+      >
+        <MessageCircleIcon size={13} />
+        <span>{localCount}</span>
+        <ChevronDownIcon size={11} className={`forum-replies-chevron ${open ? 'forum-replies-chevron--open' : ''}`} />
+      </button>
+
+      {open && (
+        <div className="forum-comments-body">
+          {loading && (
+            <div className="forum-comments-loading">
+              <span className="forum-spinner" /> Loading comments...
+            </div>
+          )}
+
+          {!loading && comments.length === 0 && (
+            <p className="forum-comments-empty">No comments yet. Be the first to respond.</p>
+          )}
+
+          {comments.map((c) => (
+            <div key={c._id} className="forum-comment">
+              <MiniAvatar displayName={c.displayName || 'Anonymous'} />
+              <div className="forum-comment-content">
+                <div className="forum-comment-meta">
+                  <span className="forum-comment-author">{c.displayName || 'Anonymous'}</span>
+                  <span className="forum-comment-time">{commentTimeAgo(c.createdAt)}</span>
+                </div>
+                <p className="forum-comment-body">{c.body}</p>
+              </div>
+            </div>
+          ))}
+
+          {/* Comment input */}
+          <div className="forum-comment-input-wrap">
+            <input
+              type="text"
+              placeholder="Name (optional)"
+              value={commentName}
+              onChange={(e) => setCommentName(e.target.value)}
+              maxLength={30}
+              className="forum-comment-name-input"
+            />
+            <div className="forum-comment-input-row">
+              <input
+                type="text"
+                placeholder="Write a comment..."
+                value={commentBody}
+                onChange={(e) => setCommentBody(e.target.value)}
+                maxLength={1000}
+                className="forum-comment-text-input"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey && commentBody.trim().length >= 2) {
+                    e.preventDefault();
+                    handleSubmit();
+                  }
+                }}
+              />
+              <button
+                type="button"
+                onClick={handleSubmit}
+                disabled={commentBody.trim().length < 2 || submitting}
+                className={`forum-comment-send ${commentBody.trim().length >= 2 && !submitting ? 'forum-comment-send--active' : ''}`}
+                aria-label="Send comment"
+              >
+                {submitting ? <span className="forum-spinner forum-spinner--sm" /> : <SendIcon size={13} />}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════
+   STORY CARD
+   ═══════════════════════════════════════════════════ */
+
+function StoryCard({
+  story,
+  isLiked,
+  onToggleLike,
+  heartCount,
+}: {
+  story: ForumStory;
+  isLiked: boolean;
+  onToggleLike: () => void;
+  heartCount: number;
+}) {
   return (
     <article className="forum-story-card">
       <div className="forum-story-meta">
@@ -158,12 +343,9 @@ function StoryCard({ story, isLiked, onToggleLike }: { story: ForumStory; isLike
           className={`forum-story-heart ${isLiked ? 'forum-story-heart--active' : ''}`}
         >
           <HeartIcon size={14} />
-          <span>{story.hearts + (isLiked ? 1 : 0)}</span>
+          <span>{heartCount}</span>
         </button>
-        <span className="forum-story-replies">
-          <MessageCircleIcon size={13} />
-          <span>{story.replies}</span>
-        </span>
+        <CommentSection postId={story.id} commentCount={story.replies} />
       </div>
     </article>
   );
@@ -193,8 +375,14 @@ export function ForumFeed({
   const [showToast, setShowToast] = useState(false);
   const [submitError, setSubmitError] = useState('');
 
-  // localStorage-persisted likes
+  // Hearts: localStorage tracks which posts this user liked, heartCounts tracks live counts
   const [likedIds, setLikedIds] = useState<Set<string>>(new Set());
+  const [heartCounts, setHeartCounts] = useState<Record<string, number>>(() => {
+    const counts: Record<string, number> = {};
+    stories.forEach(s => { counts[s.id] = s.hearts; });
+    return counts;
+  });
+
   useEffect(() => {
     try {
       const stored = localStorage.getItem('wif-forum-likes');
@@ -202,14 +390,47 @@ export function ForumFeed({
     } catch { /* ignore */ }
   }, []);
 
-  const toggleLike = useCallback((id: string) => {
+  const toggleLike = useCallback(async (id: string) => {
+    const wasLiked = likedIds.has(id);
+    const action = wasLiked ? 'unlike' : 'like';
+
+    // Optimistic update
     setLikedIds(prev => {
       const next = new Set(prev);
-      if (next.has(id)) next.delete(id); else next.add(id);
+      if (wasLiked) next.delete(id); else next.add(id);
       try { localStorage.setItem('wif-forum-likes', JSON.stringify([...next])); } catch { /* ignore */ }
       return next;
     });
-  }, []);
+    setHeartCounts(prev => ({
+      ...prev,
+      [id]: Math.max(0, (prev[id] || 0) + (wasLiked ? -1 : 1)),
+    }));
+
+    // Persist to Sanity
+    try {
+      const res = await fetch('/api/forum/heart', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ postId: id, action }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setHeartCounts(prev => ({ ...prev, [id]: data.hearts }));
+      }
+    } catch {
+      // Revert on failure
+      setLikedIds(prev => {
+        const next = new Set(prev);
+        if (wasLiked) next.add(id); else next.delete(id);
+        try { localStorage.setItem('wif-forum-likes', JSON.stringify([...next])); } catch { /* ignore */ }
+        return next;
+      });
+      setHeartCounts(prev => ({
+        ...prev,
+        [id]: Math.max(0, (prev[id] || 0) + (wasLiked ? 1 : -1)),
+      }));
+    }
+  }, [likedIds]);
 
   const filtered = useMemo(() => {
     return stories.filter((s) => activeTag === 'All' || s.tag === activeTag);
@@ -404,7 +625,13 @@ export function ForumFeed({
             )}
 
             {visible.map((story) => (
-              <StoryCard key={story.id} story={story} isLiked={likedIds.has(story.id)} onToggleLike={() => toggleLike(story.id)} />
+              <StoryCard
+                key={story.id}
+                story={story}
+                isLiked={likedIds.has(story.id)}
+                onToggleLike={() => toggleLike(story.id)}
+                heartCount={heartCounts[story.id] ?? story.hearts}
+              />
             ))}
 
             {hasMore && (

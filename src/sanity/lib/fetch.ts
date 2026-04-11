@@ -1,4 +1,4 @@
-import { getClient } from './client';
+import { getClient, getFreshClient } from './client';
 import {
   allArticlesQuery,
   articleBySlugQuery,
@@ -8,6 +8,7 @@ import {
   allForumPostsQuery,
   forumPostCountQuery,
   forumHeartsQuery,
+  commentsByPostQuery,
 } from './queries';
 
 /* ═══════════════════════════════════════════════════
@@ -45,6 +46,14 @@ export interface SanityForumPost {
   tag: string;
   hearts: number;
   publishedAt: string;
+  commentCount: number;
+}
+
+export interface SanityForumComment {
+  _id: string;
+  displayName: string | null;
+  body: string;
+  createdAt: string;
 }
 
 export interface ForumStats {
@@ -116,7 +125,7 @@ export async function getAllForumPosts(): Promise<SanityForumPost[]> {
   if (!isSanityConfigured()) return [];
 
   try {
-    const posts = await getClient().fetch<SanityForumPost[]>(allForumPostsQuery);
+    const posts = await getFreshClient().fetch<SanityForumPost[]>(allForumPostsQuery);
     return posts || [];
   } catch (error) {
     console.warn('Sanity forum fetch failed:', error);
@@ -129,13 +138,25 @@ export async function getForumStats(): Promise<ForumStats> {
 
   try {
     const [postCount, totalHearts] = await Promise.all([
-      getClient().fetch<number>(forumPostCountQuery),
-      getClient().fetch<number>(forumHeartsQuery),
+      getFreshClient().fetch<number>(forumPostCountQuery),
+      getFreshClient().fetch<number>(forumHeartsQuery),
     ]);
     return { postCount: postCount || 0, totalHearts: totalHearts || 0 };
   } catch (error) {
     console.warn('Sanity forum stats fetch failed:', error);
     return { postCount: 0, totalHearts: 0 };
+  }
+}
+
+export async function getCommentsByPost(postId: string): Promise<SanityForumComment[]> {
+  if (!isSanityConfigured()) return [];
+
+  try {
+    const comments = await getFreshClient().fetch<SanityForumComment[]>(commentsByPostQuery, { postId });
+    return comments || [];
+  } catch (error) {
+    console.warn('Sanity comments fetch failed:', error);
+    return [];
   }
 }
 

@@ -8,6 +8,7 @@ const apiVersion = '2024-01-01';
 // Lazy client creation — avoids crash when env vars aren't set
 let _client: SanityClient | null = null;
 let _previewClient: SanityClient | null = null;
+let _noCdnClient: SanityClient | null = null;
 
 function getBaseClient(): SanityClient {
   if (!_client) {
@@ -19,6 +20,18 @@ function getBaseClient(): SanityClient {
     });
   }
   return _client;
+}
+
+function getNoCdnClient(): SanityClient {
+  if (!_noCdnClient) {
+    _noCdnClient = createClient({
+      projectId,
+      dataset,
+      apiVersion,
+      useCdn: false,
+    });
+  }
+  return _noCdnClient;
 }
 
 function getPreviewBaseClient(): SanityClient {
@@ -36,6 +49,11 @@ function getPreviewBaseClient(): SanityClient {
 
 export function getClient(preview = false): SanityClient {
   return preview ? getPreviewBaseClient() : getBaseClient();
+}
+
+/** Bypass CDN for data that needs to be fresh (forum posts, comments, hearts) */
+export function getFreshClient(): SanityClient {
+  return getNoCdnClient();
 }
 
 // Re-export for convenience

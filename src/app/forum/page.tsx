@@ -1,7 +1,7 @@
 import { getAllForumPosts, getForumStats } from '@/sanity/lib/fetch';
 import { ForumFeed, type ForumStory } from '@/components/ForumFeed';
 
-export const revalidate = 60;
+export const revalidate = 10;
 
 /* ═══════════════════════════════════════════════════
    PLACEHOLDER DATA (shown until real posts exist)
@@ -98,7 +98,7 @@ export default async function ForumPage() {
     title: p.title,
     body: p.body,
     hearts: p.hearts,
-    replies: 0,
+    replies: p.commentCount || 0,
   }));
 
   // Use CMS posts if available, otherwise placeholders
